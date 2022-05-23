@@ -21,6 +21,7 @@ class ReactionMessage extends Message
     super user
     @user = user
     @type = @type.replace("reaction_", "")
+    @message_type = "ReactionMessage"
 
 class FileSharedMessage extends Message
 
@@ -35,6 +36,7 @@ class FileSharedMessage extends Message
   constructor: (user, @file_id, @event_ts) ->
     super user
     @user = user
+    @message_type = "FileSharedMessage"
 
 class PresenceMessage extends Message
 
@@ -48,6 +50,7 @@ class PresenceMessage extends Message
   constructor: (@users, @presence) ->
     # supply the super class with a fake user because the real data is in the `users` property
     super { room: "" }
+    @message_type = "PresenceMessage"
 
 class SlackTextMessage extends TextMessage
 
@@ -83,6 +86,8 @@ class SlackTextMessage extends TextMessage
   ###
   constructor: (user, text, rawText, rawMessage, channel_id, robot_name, robot_alias) ->
     super user, text, rawMessage.ts
+
+    @message_type = "SlackTextMessage"
 
     @user = user
     @text = text

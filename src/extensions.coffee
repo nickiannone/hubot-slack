@@ -15,13 +15,13 @@ if Robot.name == "CoffeeScriptCompatibleClass"
 # @param {Function} callback - a function that is called with a Response object if the matcher function returns true
 ###
 Robot::hearReaction = (matcher, options, callback) ->
-  matchReaction = (msg) -> msg instanceof ReactionMessage
+  matchReaction = (msg) -> msg instanceof ReactionMessage || msg?.message_type == "ReactionMessage"
 
   if not options and not callback
     return @listen matchReaction, matcher
 
   else if matcher instanceof Function
-    matchReaction = (msg) -> msg instanceof ReactionMessage && matcher(msg)
+    matchReaction = (msg) -> (msg instanceof ReactionMessage || msg?.message_type == "ReactionMessage") && matcher(msg)
 
   else
     callback = options
@@ -57,13 +57,13 @@ Robot::react = (matcher, options, callback) ->
 # function returns true.
 ###
 Robot::presenceChange = (matcher, options, callback) ->
-  matchPresence = (msg) -> msg instanceof PresenceMessage
+  matchPresence = (msg) -> msg instanceof PresenceMessage || msg?.message_type == "PresenceMessage"
 
   if arguments.length == 1
     return @listen matchPresence, matcher
 
   else if matcher instanceof Function
-    matchPresence = (msg) -> msg instanceof PresenceMessage && matcher(msg)
+    matchPresence = (msg) -> (msg instanceof PresenceMessage || msg?.message_type == "PresenceMessage") && matcher(msg)
 
   else
     callback = options
@@ -81,13 +81,13 @@ Robot::presenceChange = (matcher, options, callback) ->
 # @param {Function} callback - a function that is called with a Response object if the matcher function returns true
 ###
 Robot::fileShared = (matcher, options, callback) ->
-  matchFileShare = (msg) -> msg instanceof FileSharedMessage
+  matchFileShare = (msg) -> msg instanceof FileSharedMessage || msg?.message_type == "FileSharedMessage"
 
   if not options and not callback
     return @listen matchFileShare, matcher
 
   else if matcher instanceof Function
-    matchFileShare = (msg) -> msg instanceof FileSharedMessage && matcher(msg)
+    matchFileShare = (msg) -> (msg instanceof FileSharedMessage || msg?.message_type == "FileSharedMessage") && matcher(msg)
 
   else
     callback = options
