@@ -1,4 +1,9 @@
 {Message, TextMessage}  = require.main.require "hubot"
+
+# Requires the es2015 version of Hubot for v3 or higher so the correct prototype is updated
+if Message.name == "CoffeeScriptCompatibleClass"
+  {Message, TextMessage} = require.main.require "hubot/es2015"
+
 SlackClient             = require "./client"
 SlackMention            = require "./mention"
 Promise                 = require "bluebird"
